@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\NotesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,11 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::middleware('auth')->group(function() {
-    Route::get('/', function(){
-        return view('admin.dashboard');
-    });
     Route::resource('users', UsersController::class);
-    Route::resource('notes', NotesController::class);
+    Route::resource('/', NotesController::class);
     Route::get('/notes/create', function(){
         return view('notes.create');
     });
@@ -35,6 +33,6 @@ Route::get('/login', function(){
     return view('auth.login');
 });
 
-Route::get('/', function(){
-    return view('dashboard');
-});
+// Route::get('/', function(){
+//     \
+// });

@@ -10,7 +10,8 @@
             </div>
                 
             <div class="row mt-3">
-                 @foreach ($notes as $note)
+            @php $data = json_decode($notes) @endphp
+                 @foreach ($data as $note)
                  <div class="col-sm-6">
                     <div class="card border-0 shadow">
                     <div class="card-body">
