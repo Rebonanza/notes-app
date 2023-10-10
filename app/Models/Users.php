@@ -16,5 +16,13 @@ class Users extends Model
     	'password', 
     	'role'
     ];
+
+    public function notes(){
+        return $this->hasMany(Notes::class);
+    }
+
+    public function roles(){
+        return $this->belongsTo(Roles::class);
+    }
 }
 
