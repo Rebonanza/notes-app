@@ -13,12 +13,11 @@ class NotesController extends Controller
     {
         return response()->json([
             'message' => 'Berhasil mendapatkan data catatan',
-            'data' => Notes::all()->map(function ($note) {
+            'data' => Notes::where('user_id', auth()->user()->id)->get()->map(function ($note) {
                 return [
                     'id' => $note->id,
                     'title' => $note->title,
                     'description' => $note->description,
-                    
                 ];
             })
         ]);
