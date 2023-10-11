@@ -4,17 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable ;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 
-class Users extends Model
+class Users extends Model implements Authenticatable
 {
     use HasFactory;
+    use AuthenticableTrait;
     protected $table = 'users';
 
     protected $fillable = [
     	'name', 
         'email',
     	'password', 
-    	'role'
+    	'role_id'
     ];
 
     public function notes(){

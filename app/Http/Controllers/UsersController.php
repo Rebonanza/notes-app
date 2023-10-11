@@ -10,18 +10,20 @@ class UsersController extends Controller
 {
     public function index()
     {
-        return response()->json([
-            'message' => 'Berhasil mendapatkan data user',
-            'data' => Users::all()->map(function ($user) {
-                return [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'password' => $user->email,
-                    'role' => $user->role->name,
-                ];
-            })
-        ]);
+        // return response()->json([
+        //     'message' => 'Berhasil mendapatkan data user',
+        //     'data' => Users::all()->map(function ($user) {
+        //         return [
+        //             'id' => $user->id,
+        //             'name' => $user->name,
+        //             'email' => $user->email,
+        //             'password' => $user->email,
+        //             'role' => $user->role->name,
+        //         ];
+        //     })
+        // ]);
+        $contacts = Contact::all;
+        return view('dashboard', compact('contacts'));
     }
 
 

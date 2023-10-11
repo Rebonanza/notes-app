@@ -13,13 +13,15 @@
                     <div class="card border-0 shadow">
                     <div class="card-body">
                     <h5 class="card-title">Edit Notes</h5>
-                    <form method="POST" action="/notes/update">
+                    <form method="POST" action="/notes/edit/{{$notes->id}}">
+                        @method('put')
+                        @csrf
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="title" value="{{$post->title}}">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="title" value="{{$notes->title}}">
                                 <label for="floatingInput">Notes Title</label>
                             </div>
                             <div class="form-floating">
-                            <textarea class="form-control" placeholder="Description" id="floatingTextarea" name="description" value="{{$post->description}}"></textarea>
+                            <textarea class="form-control" placeholder="Description" id="floatingTextarea" name="description" >{{$notes->description}}</textarea>
                             <label for="floatingTextarea">Description</label>
                             </div>
                             <button type="submit" class="btn btn-success mt-3">Submit</button>

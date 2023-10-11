@@ -11,16 +11,18 @@ class NotesController extends Controller
 {
     public function index()
     {
-        return response()->json([
-            'message' => 'Berhasil mendapatkan data catatan',
-            'data' => Notes::where('user_id', auth()->user()->id)->get()->map(function ($note) {
-                return [
-                    'id' => $note->id,
-                    'title' => $note->title,
-                    'description' => $note->description,
-                ];
-            })
-        ]);
+        // return response()->json([
+        //     'message' => 'Berhasil mendapatkan data catatan',
+        //     'data' => Notes::where('user_id', auth()->user()->id)->get()->map(function ($note) {
+        //         return [
+        //             'id' => $note->id,
+        //             'title' => $note->title,
+        //             'description' => $note->description,
+        //         ];
+        //     })
+        // ]);
+        $notes = Notes::where('user_id', auth()->user()->id)->get();
+        return view('dashboard', compact('notes'));
     }
 
     public function create()
@@ -31,27 +33,26 @@ class NotesController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => ['required', 'max:255'],
-            'description'=> ['required', 'min:10'],
-        ]);    
-        
-        if($validator->fails()){
-            return response()->json([
-                'message' => 'Gagal Menambahkan Data Catatan',
-                'error' => $validator->errors()
-                 ], 422);
-        }
-        $validated = $request->all();
-        $validated['password'] = bcrypt($validated['password']);     
-        $note = new Notes();
-        $note->fill($validated);
-        $note->save();        
-        return response()->json([
-            'message' => 'Berhasil menambahkan catatan', 'data' => $note
-        ])->setStatusCode(201);      
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'description'=> 'required|min:10',
+        ]);   
+ 
+        // if($validator->fails()){
+        //     return response()->json([
+        //         'message' => 'Gagal Menambahkan Data Catatan',
+        //         'error' => $validator->errors()
+        //          ], 422);
+        // }
+        // $validated = $request->all();
+        $validated['user_id'] = auth()->user()->id;   
+        Notes::create($validated);  
+        return redirect('/dashboard')->with('success', 'New notes has been added');
+        // return response()->json([
+        //     'message' => 'Berhasil menambahkan catatan', 'data' => $note
+        // ])->setStatusCode(201);      
     }
-    public function show(Notes $note)
+    public function edit(Notes $note)
     {
         // name: 'Katarina Smith',
         // email: 'ajfijfea@gmail.com',
@@ -61,42 +62,29 @@ class NotesController extends Controller
         // role: 'admin',
         // age: 25,
         // password: ''
-        $data = [
-            'title' => $note->title,
-            'description' => $note->description,
-           
-        ];
-        return response()->json([
-            'message' => 'Berhasil menampilkan data catatan', 'data' => $data
+        return view('Notes.edit',[
+            'notes' => $note,
         ]);
     }
 
     public function update(Request $request, Notes $note)
     {
 
-        $validator = Validator::make($request->all(), [
-            'title' => ['required', 'max:255'],
-            'description'=> ['required', 'min:10'],
-        ]);    
-        
-        if($validator->fails()){
-            return response()->json([
-                'message' => 'Gagal Mengubah Catatan',
-                'error' => $validator->errors()
-                 ], 422);
-        }
-        $validated = $request->all();
-        $note->fill($validated)->update();
-        return response()->json([
-            'message' => 'Berhasil mengubah catatan', 'data' => $note
-        ]);
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'description'=> 'required|min:10',
+        ]);   
+ 
+        $validated['user_id'] = auth()->user()->id;   
+        Notes::where('id',$request->id)
+            ->update($validated);
+        return redirect('/dashboard')->with('success', 'Notes has been Updated');
     }
 
     public function destroy(Notes $note)
     {
-        $note->delete();
-        return response()->json([
-            'message' => 'Berhasil hapus catatan'
-        ]);
+        Notes::destroy($note->id);
+        return redirect('/dashboard')->with('success', 'Notes has been Deleted');
+       
     }
 }

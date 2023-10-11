@@ -16,11 +16,23 @@
                     <form method="POST" action="/notes/create">
                     @csrf
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="title">
+                                <input type="text" class="form-control @error('title')
+                                is-invalid @enderror" 
+                                id="floatingInput" placeholder="name@example.com" name="title">
+                                @error('title')
+                                <div class="invalid-feedback">
+                                    {${message}}
+                                </div>
+                                @enderror
                                 <label for="floatingInput">Notes Title</label>
                             </div>
                             <div class="form-floating">
-                            <textarea class="form-control" placeholder="Description" id="floatingTextarea" name="description"></textarea>
+                            <textarea class="form-control @error('description')is-invalid @enderror" placeholder="Description" id="floatingTextarea" name="description"></textarea>
+                            @error('description')
+                                <div class="invalid-feedback">
+                                    {${message}}
+                                </div>
+                            @enderror
                             <label for="floatingTextarea">Description</label>
                             </div>
                             <button type="submit" class="btn btn-success mt-3">Submit</button>
