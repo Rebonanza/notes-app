@@ -17,7 +17,7 @@ class Notes extends Model
         'image',
     ];
 
-    public function users(){
+    public function user(){
         return $this->belongsTo(Users::class);
     }
 }

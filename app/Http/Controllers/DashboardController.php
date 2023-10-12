@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Notes;
 use Illuminate\Http\Request;
 
-class NotesController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,13 @@ class NotesController extends Controller
      */
     public function index()
     {
-        //
-        $notes = Notes::where('user_id', auth()->user()->id)->get();
-        return view('Notes.index', compact('notes'));
+        return view('dashboard.home');
+    }
+
+    public function notes()
+    {
+        $notes = Notes::with(['user'])->latest()->get();
+        return view('dashboard.notes', compact('notes'));
     }
 
     /**
@@ -27,7 +31,6 @@ class NotesController extends Controller
     public function create()
     {
         //
-        return view('notes.create');
     }
 
     /**
@@ -39,16 +42,7 @@ class NotesController extends Controller
     public function store(Request $request)
     {
         //
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'description'=> 'required|min:10',
-        ]);   
- 
-        $validated['user_id'] = auth()->user()->id;   
-        Notes::create($validated);  
-        return redirect('/dashboard')->with('success', 'New notes has been added');
     }
-
 
     /**
      * Display the specified resource.
@@ -70,9 +64,6 @@ class NotesController extends Controller
     public function edit(Notes $notes)
     {
         //
-        return view('Notes.edit',[
-            'notes' => $note,
-        ]);
     }
 
     /**
@@ -85,15 +76,6 @@ class NotesController extends Controller
     public function update(Request $request, Notes $notes)
     {
         //
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'description'=> 'required|min:10',
-        ]);   
- 
-        $validated['user_id'] = auth()->user()->id;   
-        Notes::where('id',$request->id)
-            ->update($validated);
-        return redirect('/dashboard')->with('success', 'Notes has been Updated');
     }
 
     /**
@@ -105,7 +87,5 @@ class NotesController extends Controller
     public function destroy(Notes $notes)
     {
         //
-        Notes::destroy($notes->id);
-        return redirect('/dashboard')->with('success', 'Notes has been Deleted');
     }
 }

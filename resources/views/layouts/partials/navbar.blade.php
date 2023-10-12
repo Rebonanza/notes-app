@@ -6,8 +6,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="#">Notes</a>
+                <a class="nav-link" aria-current="page" href="/">Home</a>
+                <a class="nav-link" aria-current="page" href="/notes">Notes</a>
+
+                @auth 
+                <li class="nav-item dropdown ms-auto">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Welcome, {{auth()->user()->name}}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <form action="/logout" method="post">
+                            @csrf
+                         <button type="submit" class="dropdown-item">Logout</button>   
+                        </form>
+                    </li>
+                </ul>
+                </li>
+                @else
+                <a class="nav-link ms-auto" href="/login">Login</a>
+                @endauth
             </div>
             </div>
         </div>

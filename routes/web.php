@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\UsersController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,10 +23,10 @@ Route::middleware('auth')->group(function() {
     Route::get('/notes/create', [NotesController::class, 'create']);
     Route::post('/notes/create', [NotesController::class, 'store']);
 
-    Route::get('/notes/edit{id}', [NotesController::class, 'edit']);
-    Route::put('/notes/edit/{id}', [NotesController::class, 'update']);
+    Route::get('/notes/edit{notes}', [NotesController::class, 'edit']);
+    Route::put('/notes/edit/{notes}', [NotesController::class, 'update']);
 
-    Route::delete('/notes/delete/{id}', [NotesController::class, 'destroy']);
+    Route::delete('/notes/delete/{notes}', [NotesController::class, 'destroy']);
 
     Route::get('/edit', function(){
         return view('notes.edit');
@@ -35,12 +36,15 @@ Route::middleware('auth')->group(function() {
 Route::get('/register', function(){
     return view('auth.register');
 });
-Route::post('/', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/', function(){
+Route::get('/login', function(){
     return view('auth.login');
 })->name('login');
-
+Route::get('/', function(){
+    return view('dashboard.home');
+});
+Route::get('/notes',  [DashboardController::class, 'notes']);
 // Route::get('/', function(){
 //     \
 // });
