@@ -9,6 +9,7 @@
             </div>
                 
             <div class="row mt-3">
+                @if ($notes)
                  @foreach ($notes as $note)
                  <div class="col-sm-6">
                     <div class="card border-0 shadow">
@@ -20,6 +21,10 @@
                     </div>
                 </div>
                 @endforeach
+                @else
+                <h3>Notes not found</h3>
+                @endif
+
                
             </div>
         </div>

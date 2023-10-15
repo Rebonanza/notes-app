@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('description');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('image')->nullable();
-            $table->timestamps()->useCurrent();
+            $table->timestamp('created_at')->nullable(true)->useCurrent();
+            $table->timestamp('updated_at')->nullable(true)->useCurrent();
+
         });
     }
 

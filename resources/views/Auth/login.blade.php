@@ -23,7 +23,7 @@
                         <h2 class="card-title">Notes App</h2>
                         <span class="card-text">Please login to enter the app</span>
                         
-                        <form method="POST" class="mt-4" action="/">
+                        <form method="POST" class="mt-4" action="/login">
                             @csrf
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">

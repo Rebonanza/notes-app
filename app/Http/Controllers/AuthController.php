@@ -50,7 +50,7 @@ class AuthController extends Controller
         $validated['password'] = bcrypt($validated['password']); 
         $validated['role_id'] = 1;
         Users::create($validated);  
-        return redirect('/')->with('success', 'Your account has been created');
+        return redirect('/login')->with('success', 'Your account has been created');
        
     }
 

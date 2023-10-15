@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedbigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->timestamps()->useCurrent();
+            $table->timestamp('created_at')->nullable(true)->useCurrent();
+            $table->timestamp('updated_at')->nullable(true)->useCurrent();
         });
     }
 

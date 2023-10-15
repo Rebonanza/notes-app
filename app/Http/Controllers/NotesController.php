@@ -71,7 +71,7 @@ class NotesController extends Controller
     {
         //
         return view('Notes.edit',[
-            'notes' => $note,
+            'notes' => $notes,
         ]);
     }
 
@@ -91,7 +91,7 @@ class NotesController extends Controller
         ]);   
  
         $validated['user_id'] = auth()->user()->id;   
-        Notes::where('id',$request->id)
+        Notes::where('id',$notes->id)
             ->update($validated);
         return redirect('/dashboard')->with('success', 'Notes has been Updated');
     }

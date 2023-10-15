@@ -19,11 +19,11 @@ use App\Http\Controllers\DashboardController;
 Route::middleware('auth')->group(function() {
     // Route::resource('users', UsersController::class);
     Route::get('/dashboard', [NotesController::class, 'index']);
-    Route::resource('/notes', NotesController::class);
+
     Route::get('/notes/create', [NotesController::class, 'create']);
     Route::post('/notes/create', [NotesController::class, 'store']);
 
-    Route::get('/notes/edit{notes}', [NotesController::class, 'edit']);
+    Route::get('/notes/edit/{notes}', [NotesController::class, 'edit']);
     Route::put('/notes/edit/{notes}', [NotesController::class, 'update']);
 
     Route::delete('/notes/delete/{notes}', [NotesController::class, 'destroy']);
